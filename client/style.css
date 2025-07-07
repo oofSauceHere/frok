@@ -1,0 +1,201 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
+#queryContainer input[type="submit"]:hover {
+    background-color: darkblue;
+    border: 1px solid darkblue;
+    color: white;
+    cursor: pointer;
+}
+
+#userMsg {
+    background-color: lightblue;
+    border: 1px solid lightblue;
+    align-self: end;
+}
+
+#frokMsg {
+    background-color: darkblue;
+    border: 1px solid darkblue;
+    color: white;
+    align-self: start;
+}
+
+@media only screen and (max-width: 1200px) {
+    body {
+        width: 100%;
+        height: 100%;
+
+        display: grid;
+        grid-template-rows: 1fr 10fr 1fr;
+    }
+
+    #logo {
+        height: 7.5em;
+        width: auto;
+
+        grid-row: 1 2;
+        margin: 2.5em auto;
+    }
+
+    #chat {
+        width: 90%;
+        padding: 1em 1.5em;
+
+        grid-row: 2 3;
+        margin: 0 auto;
+
+        border: 1px solid black;
+        border-radius: 15px;
+
+        display: flex;
+        flex-direction: column;
+
+        overflow-y: auto;
+        scrollbar-gutter: stable both-edges;
+    }
+
+    #queryContainer {
+        width: 90%;
+
+        grid-row: 3 4;
+        margin: auto;
+    }
+
+    #queryForm {
+        width: 100%;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 1em;
+    }
+
+    #queryContainer input {
+        padding: 0.5em 1em;
+        border-radius: 5px;
+
+        margin: 1em 0;
+        font-size: 2em;
+    }
+
+    #queryContainer input[type="text"] {
+        width: calc(75% - 0.5em);
+        height: 2em;
+        border: 1px solid black;
+    }
+
+    #queryContainer input[type="submit"] {
+        width: calc(25% - 0.5em);
+        height: 3em;
+        background-color: lightblue;
+        border: 1px solid lightblue;
+    }
+
+    .msg {
+        padding: 0.75em 1em;
+        margin: 0.5em 0;
+        border-radius: 10px;
+        word-break: break-word;
+        max-width: 75%;
+        font-size: 2em;
+        line-height: 1.5;
+    }
+
+    #loadingMsg {
+        border: 1px solid black;
+        align-self: start;
+
+        width: 2.8em;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    body {
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #logo {
+        height: 5em;
+        width: auto;
+        margin: 1em;
+    }
+
+    #chat {
+        width: 50%;
+        height: 75%;
+        padding: 1em 0.5em;
+
+        border: 1px solid black;
+        border-radius: 15px;
+
+        display: flex;
+        flex-direction: column;
+
+        overflow-y: auto;
+        scrollbar-gutter: stable both-edges;
+    }
+
+    #queryContainer {
+        width: 50%;
+    }
+
+    #queryForm {
+        width: 100%;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    #queryContainer input {
+        padding: 0.5em 1em;
+        border-radius: 5px;
+
+        margin: 1em 0.5em;
+        font-size: 1em;
+    }
+
+    #queryContainer input[type="text"] {
+        width: 75%;
+        height: 2em;
+        border: 1px solid black
+    }
+
+    #queryContainer input[type="submit"] {
+        height: 3em;
+        background-color: lightblue;
+        border: 1px solid lightblue;
+    }
+
+    .msg {
+        padding: 0.75em 1em;
+        margin: 0.5em 0;
+        border-radius: 10px;
+        word-break: break-word;
+        max-width: 75%;
+        font-size: 1em;
+        line-height: 1.5;
+    }
+
+    #loadingMsg {
+        border: 1px solid black;
+        align-self: start;
+
+        width: 3.2em;
+    }
+}
