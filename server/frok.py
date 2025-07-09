@@ -7,6 +7,7 @@ import asyncio
 from websockets.asyncio.server import serve
 from websockets.exceptions import ConnectionClosed
 from dotenv import load_dotenv
+import json
 
 # architecture:
 # on post request, send message to bot and block until response is received
@@ -59,6 +60,23 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
+    
+    if message.type != MessageType.reply and (message.content == "REVEAL DOG." or message.content == "REVEAL FRED."):
+        for websocket in sockets:
+            try:
+                if message.content == "REVEAL DOG.":
+                    await websocket.send(json.dumps({
+                        "form": "command",
+                        "message": "dog"
+                    }))
+                elif message.content == "REVEAL FRED.":
+                    await websocket.send(json.dumps({
+                        "form": "command",
+                        "message": "fred"
+                    }))
+                print("[server] Sent reveal command.")
+            except ConnectionClosed as e:
+                print("[server] Unable to send message; Connection was closed.")
 
     if message.type == MessageType.reply and message.reference.message_id in messages:
         print("[bot] Valid reply received.")
@@ -66,7 +84,10 @@ async def on_message(message):
 
         socket = messages[message.reference.message_id]
         try:
-            await socket.send(message.content)
+            await socket.send(json.dumps({
+                "form": "content",
+                "message": message.content
+            }))
         except ConnectionClosed as e:
             print("[server] Unable to send message; Connection was closed.")
         del messages[message.reference.message_id]

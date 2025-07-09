@@ -3,7 +3,6 @@ const socket = new WebSocket("ws://192.168.1.28:8765");
 var chat = document.getElementById("chat");
 var loadCount = 1;
 var load;
-var currentlyLoading = 0;
 
 function scrollDown() {
     chat.scrollTop = chat.scrollHeight - chat.clientHeight;
@@ -34,7 +33,6 @@ form.addEventListener("submit", e => {
     load = setInterval(() => {
         loadCount = loadCount%3 + 1;
         loading.innerHTML = "⬤" + " ⬤".repeat(loadCount-1);
-        console.log(loadCount);
     }, 1000);
     
     socket.send(query);
@@ -42,13 +40,21 @@ form.addEventListener("submit", e => {
 });
 
 socket.addEventListener("message", e => {
-    clearInterval(load);
-    chat.removeChild(document.getElementById("loadingMsg"));
+    console.log(e.data);
+    const data = JSON.parse(e.data);
+    if(data.form == "content") {
+        clearInterval(load);
+        chat.removeChild(document.getElementById("loadingMsg"));
 
-    var msg = document.createElement("div");
-    msg.id = "frokMsg";
-    msg.classList.add("msg");
-    msg.innerHTML = e.data.replaceAll("\n", "<br>");
-    chat.appendChild(msg);
-    scrollDown();
+        var msg = document.createElement("div");
+        msg.id = "frokMsg";
+        msg.classList.add("msg");
+        msg.innerHTML = data.message.replaceAll("\n", "<br>");
+        chat.appendChild(msg);
+        scrollDown();
+    } else if(data.form == "command" && data.message == "dog") {
+        document.getElementById("image").style.opacity = 1;
+    } else if(data.form == "command" && data.message == "fred") {
+        document.getElementById("image").style.backgroundImage = "url('images/fred.jpg')";
+    }
 });
